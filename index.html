@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jiauddin School Question Maker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="no-print control-panel">
+        <h2>মডেল টেস্ট জেনারেটর</h2>
+        
+        <div class="input-group">
+            <label>শ্রেণি নির্বাচন করুন:</label>
+            <select id="classSelect">
+                <option value="একাদশ শ্রেণি">একাদশ শ্রেণি</option>
+                <option value="দ্বাদশ শ্রেণি">দ্বাদশ শ্রেণি</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>বিষয় নির্বাচন করুন:</label>
+            <select id="subjectSelect">
+                <option value="অর্থনীতি প্রথম পত্র">অর্থনীতি প্রথম পত্র</option>
+                <option value="অর্থনীতি দ্বিতীয় পত্র">অর্থনীতি দ্বিতীয় পত্র</option>
+                <option value="বাংলা প্রথম পত্র">বাংলা প্রথম পত্র</option>
+                <option value="ইংরেজি প্রথম পত্র">ইংরেজি প্রথম পত্র</option>
+                <option value="আইসিটি">আইসিটি</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>প্রশ্নের ধরণ:</label>
+            <select id="questionType">
+                <option value="mcq">বহুনির্বাচনি (MCQ)</option>
+                <option value="cq">সৃজনশীল (CQ)</option>
+            </select>
+        </div>
+
+        <button onclick="generatePaper()">প্রশ্ন জেনারেট করুন</button>
+        <button onclick="copyToClipboard()" style="background-color: #28a745;">কপি করুন (MS Word)</button>
+        <button onclick="window.print()" style="background-color: #17a2b8;">প্রিন্ট করুন</button>
+    </div>
+
+    <div class="paper-container" id="paperContent">
+        <div class="header">
+            <h1>জিয়াউদ্দিন স্কুল এন্ড কলেজ</h1>
+            <h3>মডেল টেস্ট-২০২৬</h3>
+            <p>শ্রেণি: <span id="displayClass">একাদশ শ্রেণি</span> | বিষয়: <span id="displaySubject">অর্থনীতি</span></p>
+            <div class="marks-info">
+                <span id="timeDisplay">সময়: ৩০ মিনিট</span>
+                <span id="marksDisplay">পূর্ণমান: ৩০</span>
+            </div>
+            <hr>
+            <p id="instruction" style="font-size: 14px; font-weight: bold;">[দ্রষ্টব্য: সকল প্রশ্নের মান সমান, প্রতিটি প্রশ্নের মান ১]</p>
+        </div>
+
+        <div id="questionBody" class="questions">
+            </div>
+    </div>
+
+</body>
+</html>
