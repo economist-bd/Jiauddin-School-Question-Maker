@@ -9,7 +9,7 @@ async function fetchQuestions() {
     // লোডার অন করা
     document.getElementById('loader').style.display = 'block';
     const responseArea = document.getElementById('aiResponseArea');
-    responseArea.innerHTML = '<p style="text-align:center">প্রশ্ন তৈরি হচ্ছে...</p>';
+    responseArea.innerHTML = '<p style="text-align:center; color: #007bff; font-weight:bold;">AI প্রশ্ন জেনারেট করছে... দয়া করে ১০-১৫ সেকেন্ড অপেক্ষা করুন...</p>';
 
     // হেডার আপডেট
     document.getElementById('dispClass').innerText = cls;
@@ -17,60 +17,69 @@ async function fetchQuestions() {
     
     let prompt = "";
     
-    // AI এর জন্য প্রম্পট তৈরি (খুবই স্পেসিফিক নির্দেশ)
+    // AI এর জন্য কড়া নির্দেশনা (Prompt Engineering)
     if (type === 'mcq') {
         document.getElementById('dispTime').innerText = "সময়: ৩০ মিনিট";
         document.getElementById('dispMarks').innerText = "পূর্ণমান: ৩০";
         
-        prompt = `Act as a Bangladeshi HSC Teacher. Create a question paper for:
-        Institute: Jiauddin School and College.
-        Class: ${cls}, Subject: ${sub}.
-        Exam: Model Test-2026.
-        Type: 30 MCQ Questions (Full 30 marks).
-        Language: Bengali.
+        prompt = `
+        You are an expert HSC Exam Question Maker for Bangladesh Board Exams.
+        Task: Create a REAL "Model Test Question Paper" for subject: "${sub}", Class: "${cls}".
+        Format: 30 Multiple Choice Questions (MCQ).
         
-        IMPORTANT FORMATTING RULES:
-        1. Do NOT use markdown (no **bold**, no # headings).
-        2. Output only raw HTML code inside a div.
-        3. Structure each question like this:
-           <div class="q-item">
-             <span class="q-stem">১. প্রশ্নের উদ্দীপক বা মূল প্রশ্নটি এখানে লিখুন?</span>
-             <div class="q-options">
-               <span>(ক) অপশন ১</span><span>(খ) অপশন ২</span>
-               <span>(গ) অপশন ৩</span><span>(ঘ) অপশন ৪</span>
+        CRITICAL INSTRUCTIONS:
+        1. DO NOT use placeholders like "Question goes here" or "Option A".
+        2. GENERATE REAL ACADEMIC QUESTIONS based on the HSC syllabus of Bangladesh.
+        3. Create exactly 30 unique questions.
+        4. Provide the output in RAW HTML format inside a single <div>.
+        5. DO NOT use markdown formatting (no \`\`\`html or **bold**).
+        
+        HTML STRUCTURE FOR EACH QUESTION:
+        <div class="q-item" style="margin-bottom: 10px; page-break-inside: avoid;">
+             <div class="q-stem" style="font-weight: bold;">১. [Real Question Text Here?]</div>
+             <div class="q-options" style="display: grid; grid-template-columns: 1fr 1fr; margin-left: 20px;">
+               <span>(ক) [Real Option]</span> <span>(খ) [Real Option]</span>
+               <span>(গ) [Real Option]</span> <span>(ঘ) [Real Option]</span>
              </div>
-           </div>
-        4. Generate exactly 30 unique and relevant questions.`;
+        </div>
+        (Repeat this for 30 questions with correct numbering in Bengali like ১, ২, ৩...)
+        `;
         
     } else {
         document.getElementById('dispTime').innerText = "সময়: ২ ঘণ্টা ৩০ মি.";
         document.getElementById('dispMarks').innerText = "পূর্ণমান: ৭০";
         
-        prompt = `Act as a Bangladeshi HSC Teacher. Create a Creative Question (CQ/Srijonshil) paper for:
-        Institute: Jiauddin School and College.
-        Class: ${cls}, Subject: ${sub}.
-        Exam: Model Test-2026.
-        Type: 11 Creative Questions (Student answers 7, Total 70 Marks).
-        Language: Bengali.
+        prompt = `
+        You are an expert HSC Exam Question Maker for Bangladesh Board Exams.
+        Task: Create a REAL "Creative Question (Srijonshil) Paper" for subject: "${sub}", Class: "${cls}".
+        Format: 11 Creative Questions (CQ).
         
-        IMPORTANT FORMATTING RULES:
-        1. Do NOT use markdown.
-        2. Output only raw HTML.
-        3. Structure each question like this:
-           <div class="q-item" style="margin-bottom: 25px;">
-             <span class="q-stem">১. উদ্দীপকটি পড় এবং নিচের প্রশ্নগুলোর উত্তর দাও: <br> [এখানে একটি প্রাসঙ্গিক উদ্দীপক তৈরি করুন]</span>
-             <br>
-             <span class="cq-sub">(ক) জ্ঞানমূলক প্রশ্ন? <span style="float:right">১</span></span>
-             <span class="cq-sub">(খ) অনুধাবনমূলক প্রশ্ন? <span style="float:right">২</span></span>
-             <span class="cq-sub">(গ) প্রয়োগমূলক প্রশ্ন? <span style="float:right">৩</span></span>
-             <span class="cq-sub">(ঘ) উচ্চতর দক্ষতামূলক প্রশ্ন? <span style="float:right">৪</span></span>
-           </div>
-        4. Generate exactly 11 creative questions.`;
+        CRITICAL INSTRUCTIONS:
+        1. DO NOT use placeholders. Write REAL Creative Scenarios (Uddipok).
+        2. GENERATE REAL ACADEMIC QUESTIONS based on the HSC syllabus.
+        3. Create exactly 11 unique Creative Questions.
+        4. Provide the output in RAW HTML format inside a single <div>.
+        
+        HTML STRUCTURE FOR EACH QUESTION:
+        <div class="q-item" style="margin-bottom: 30px; page-break-inside: avoid;">
+             <div class="q-stem" style="font-weight: bold; margin-bottom: 5px;">
+                [Question Number in Bengali]. নিচের উদ্দীপকটি পড় এবং প্রশ্নগুলোর উত্তর দাও:<br>
+                "[Write a realistic scenario/paragraph related to ${sub} here]"
+             </div>
+             <div class="cq-sub" style="margin-left: 20px;">
+                (ক) [Knowledge based question]? <span style="float:right">১</span><br>
+                (খ) [Comprehension based question]? <span style="float:right">২</span><br>
+                (গ) [Application based question]? <span style="float:right">৩</span><br>
+                (ঘ) [Higher Order Thinking question]? <span style="float:right">৪</span>
+             </div>
+        </div>
+        (Repeat this for 11 questions with correct numbering in Bengali like ১, ২, ৩...)
+        `;
     }
 
     try {
         const result = await callGemini(prompt);
-        // Markdown কোড ব্লক (```html ... ```) থাকলে সরিয়ে ফেলা
+        // Markdown ক্লিন করা (যদি AI ভুল করে দিয়ে দেয়)
         let cleanHtml = result.replace(/```html/g, '').replace(/```/g, '');
         responseArea.innerHTML = cleanHtml;
     } catch (error) {
@@ -81,7 +90,6 @@ async function fetchQuestions() {
     }
 }
 
-// Gemini API কল করার ফাংশন
 async function callGemini(promptText) {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
     
@@ -103,28 +111,35 @@ async function callGemini(promptText) {
     return data.candidates[0].content.parts[0].text;
 }
 
-// MS Word এর জন্য ফরম্যাট বজায় রেখে কপি করার ফাংশন
+// কপি ফাংশন - যা Word এ নিলে স্টাইল নষ্ট হবে না
 function copyForWord() {
-    const content = document.getElementById('paperContent');
+    const headerContent = document.getElementById('headerSection').innerHTML;
+    const questionContent = document.getElementById('aiResponseArea').innerHTML;
     
-    // সিলেকশন তৈরি করা
+    // একটি অদৃশ্য ডিভ তৈরি করে সেখানে সব কন্টেন্ট রাখা হচ্ছে
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = headerContent + "<hr>" + questionContent;
+    tempDiv.style.fontFamily = "'SutonnyMJ', 'Kalpurush', sans-serif"; // ফন্ট ঠিক রাখা
+    
+    document.body.appendChild(tempDiv);
+    
     const range = document.createRange();
-    range.selectNode(content);
+    range.selectNode(tempDiv);
     window.getSelection().removeAllRanges();
     window.getSelection().addRange(range);
     
     try {
-        // মডার্ন ব্রাউজারে ফরম্যাটেড কপির চেষ্টা
         document.execCommand('copy');
-        alert("প্রশ্ন কপি হয়েছে! \nএখন MS Word খুলে Paste (Ctrl+V) করুন।");
+        alert("সম্পূর্ণ প্রশ্ন কপি হয়েছে! MS Word এ পেস্ট করুন।");
     } catch (err) {
-        alert("কপি করতে সমস্যা হয়েছে। দয়া করে ম্যানুয়ালি সিলেক্ট করে কপি করুন।");
+        alert("কপি করতে সমস্যা হয়েছে।");
     }
     
+    document.body.removeChild(tempDiv);
     window.getSelection().removeAllRanges();
 }
 
-// Service Worker (Optional for PWA)
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');
 }
