@@ -1,6 +1,6 @@
 body {
-    font-family: 'Kalpurush', Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'SutonnyMJ', 'Kalpurush', sans-serif; /* বাংলার জন্য ফন্ট */
+    background-color: #e9ecef;
     margin: 0;
     padding: 20px;
 }
@@ -8,97 +8,64 @@ body {
 .control-panel {
     background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    max-width: 700px;
     margin: 0 auto 20px auto;
 }
 
-.input-group {
-    margin-bottom: 15px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-right: 5px;
-    margin-top: 10px;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* প্রশ্নপত্রের ডিজাইন (A4 সাইজ সিমুলেশন) */
-.paper-container {
-    background: white;
-    width: 210mm;
-    min-height: 297mm;
-    padding: 20mm;
-    margin: 0 auto;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    box-sizing: border-box; 
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.header h1 { margin: 0; font-size: 24px; color: #000; }
-.header h3 { margin: 5px 0; font-size: 18px; }
-.marks-info {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.questions {
-    line-height: 1.6;
-}
-
-.question-item {
-    margin-bottom: 15px;
-}
-
-/* দুই কলামে MCQ দেখানোর জন্য */
-.mcq-options {
+.grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5px;
-    margin-left: 20px;
+    gap: 15px;
 }
 
-/* প্রিন্ট করার সময় বাটন এবং ইনপুট লুকানো */
+.input-group { margin-bottom: 10px; }
+label { font-weight: bold; display: block; margin-bottom: 5px; }
+select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+
+.btn-group { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+button { flex: 1; padding: 12px; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold; }
+.btn-gen { background: #6f42c1; }
+.btn-copy { background: #28a745; }
+.btn-print { background: #17a2b8; }
+button:hover { opacity: 0.9; }
+
+.loader {
+    text-align: center;
+    color: #d63384;
+    font-weight: bold;
+    margin: 10px 0;
+    animation: blink 1s infinite;
+}
+@keyframes blink { 50% { opacity: 0.5; } }
+
+/* পেপার ডিজাইন */
+.paper-container {
+    background: white;
+    width: 210mm; /* A4 Width */
+    min-height: 297mm;
+    padding: 15mm 20mm;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    color: #000;
+}
+
+.questions-area {
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* AI থেকে আসা HTML এর স্টাইল */
+.q-item { margin-bottom: 15px; }
+.q-stem { font-weight: bold; display: block; margin-bottom: 5px; }
+.q-options { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-left: 15px; }
+.cq-sub { margin-left: 20px; display: block; margin-bottom: 3px; }
+
 @media print {
-    .no-print {
-        display: none !important;
-    }
-    body {
-        background: white;
-        padding: 0;
-    }
-    .paper-container {
-        box-shadow: none;
-        margin: 0;
-        width: 100%;
-    }
+    .no-print { display: none !important; }
+    body { background: white; padding: 0; margin: 0; }
+    .paper-container { box-shadow: none; margin: 0; width: 100%; page-break-after: always; }
 }
